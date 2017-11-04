@@ -146,6 +146,7 @@
 				TargetAttributes = {
 					F5BE500C1FAE800E0010D3AF = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = P8J75DEPS7;
 						ProvisioningStyle = Automatic;
 					};
 					F5BE50201FAE800F0010D3AF = {
@@ -339,6 +340,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = P8J75DEPS7;
 				INFOPLIST_FILE = GameReviewer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = emathew.GameReviewer;
@@ -351,6 +353,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = P8J75DEPS7;
 				INFOPLIST_FILE = GameReviewer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = emathew.GameReviewer;
