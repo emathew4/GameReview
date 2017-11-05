@@ -19,7 +19,12 @@ class GameTableViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = editButtonItem
-        loadSampleMeals()
+        if let savedGames = loadGames() {
+            games += savedGames
+        }
+        else {
+            loadSampleMeals()
+        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -73,6 +78,7 @@ class GameTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             games.remove(at: indexPath.row)
+            saveGames()
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -104,7 +110,7 @@ class GameTableViewController: UITableViewController {
         switch(segue.identifier ?? "") {
             
         case "AddItem":
-            os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+            os_log("Adding a new game.", log: OSLog.default, type: .debug)
             
         case "ShowDetail":
             guard let gameDetailViewController = segue.destination as? GameViewController else {
@@ -137,7 +143,9 @@ class GameTableViewController: UITableViewController {
                 games.append(game)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
+            saveGames()
         }
+        tableView.reloadData()
     }
     
     //MARK: Private Methods
@@ -164,5 +172,24 @@ class GameTableViewController: UITableViewController {
         
         games += [game1, game2, game3]
     }
+    
+    private func saveGames() {
+        sortGames()
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(games, toFile: Game.ArchiveURL.path)
+        
+        if isSuccessfulSave {
+            os_log("Games succesfully saved.", log: OSLog.default, type: .debug)
+        } else {
+            os_log("Failed to save games...", log: OSLog.default, type: .error)
+        }
+    }
 
+    private func loadGames() -> [Game]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Game.ArchiveURL.path) as? [Game]
+    }
+    
+    private func sortGames() {
+        games = games.sorted{ $0.name < $1.name}
+    }
+    
 }

@@ -65,13 +65,12 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
-            else {
-                fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
-            
-            photoImageView.image = selectedImage
-            dismiss(animated: true, completion: nil)
+        
+        photoImageView.image = selectedImage
+        dismiss(animated: true, completion: nil)
     }
     
     //MARK: Navigation
@@ -85,9 +84,6 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         else if let owningNavigationController = navigationController{
             owningNavigationController.popViewController(animated: true)
         }
-        else {
-            fatalError("The GameViewController is not inside a navigation controller.")
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -97,7 +93,6 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
-        
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating

@@ -82,16 +82,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lbd-5V-vMd">
-                                <rect key="frame" x="16" y="84" width="343" height="433"/>
+                                <rect key="frame" x="16" y="84" width="343" height="373"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Game Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6sC-MR-RWb">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="AFR-Y8-2Wn">
-                                        <rect key="frame" x="0.0" y="38" width="343" height="343"/>
+                                        <rect key="frame" x="30" y="38" width="283" height="283"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="AFR-Y8-2Wn" secondAttribute="height" multiplier="1:1" id="Rqc-Ag-eCk"/>
@@ -101,13 +101,13 @@
                                         </connections>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PAp-fs-You" customClass="RatingControl" customModule="GameReviewer" customModuleProvider="target">
-                                        <rect key="frame" x="45.5" y="389" width="252" height="44"/>
+                                        <rect key="frame" x="45.5" y="329" width="252" height="44"/>
                                     </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="6sC-MR-RWb" secondAttribute="trailing" id="BtT-Tq-Gei"/>
-                                    <constraint firstAttribute="trailing" secondItem="AFR-Y8-2Wn" secondAttribute="trailing" id="i0m-sZ-JEf"/>
-                                    <constraint firstItem="AFR-Y8-2Wn" firstAttribute="leading" secondItem="Lbd-5V-vMd" secondAttribute="leading" id="oCD-fh-fKe"/>
+                                    <constraint firstAttribute="trailing" secondItem="AFR-Y8-2Wn" secondAttribute="trailing" constant="30" id="TdG-pG-cfM"/>
+                                    <constraint firstItem="AFR-Y8-2Wn" firstAttribute="leading" secondItem="Lbd-5V-vMd" secondAttribute="leading" constant="30" id="oNT-9g-YNg"/>
                                 </constraints>
                             </stackView>
                         </subviews>
