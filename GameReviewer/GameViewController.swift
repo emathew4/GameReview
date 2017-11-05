@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  GameViewController.swift
 //  GameReviewer
 //
 //  Created by Ethan Mathew on 11/4/17.
@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import os.log
 
-class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //MARK: Properties
 
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var gameNameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    var game: Game?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        gameNameLabel.text = textField.text
     }
     
     //MARK: UIImagePickerControllerDelegate
@@ -55,6 +56,23 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
             
             photoImageView.image = selectedImage
             dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        guard let button = sender as? UIBarButtonItem, button === saveButton else {
+            os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
+            return
+        }
+        
+        let name = nameTextField.text ?? ""
+        let photo = photoImageView.image
+        let rating = ratingControl.rating
+        
+        game = Game(name: name, photo: photo, rating: rating)
     }
     
     //MARK: Actions

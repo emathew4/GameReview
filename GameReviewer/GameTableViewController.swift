@@ -102,7 +102,15 @@ class GameTableViewController: UITableViewController {
     }
     */
     
+    //MARK: Actions
     
+    @IBAction func unwindToGameList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? GameViewController, let game = sourceViewController.game {
+            let newIndexPath = IndexPath(row: games.count, section: 0)
+            games.append(game)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
+    }
     
     //MARK: Private Methods
     
