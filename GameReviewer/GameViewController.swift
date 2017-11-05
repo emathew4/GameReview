@@ -16,6 +16,7 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var summaryTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     var game: Game?
@@ -30,6 +31,7 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             nameTextField.text = game.name
             photoImageView.image = game.photo
             ratingControl.rating = game.rating
+            summaryTextField.text = game.summary
         }
         
         updateSaveButtonState()
@@ -96,8 +98,9 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
+        let summary = summaryTextField.text ?? ""
         
-        game = Game(name: name, photo: photo, rating: rating)
+        game = Game(name: name, photo: photo, rating: rating, summary: summary)
     }
     
     //MARK: Actions
@@ -115,8 +118,10 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     //MARK: Private Methods
     
     private func updateSaveButtonState() {
-        let text = nameTextField.text ?? ""
-        saveButton.isEnabled = !text.isEmpty
+        let nameText = nameTextField.text ?? ""
+        let summaryText = summaryTextField.text ?? ""
+        
+        saveButton.isEnabled = !nameText.isEmpty && !summaryText.isEmpty
     }
 
 }

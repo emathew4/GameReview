@@ -16,6 +16,7 @@ class Game: NSObject, NSCoding {
     var name: String
     var photo: UIImage?
     var rating: Int
+    var summary: String
     
     //MARK: Archiving Paths
     
@@ -28,11 +29,12 @@ class Game: NSObject, NSCoding {
         static let name = "name"
         static let photo = "photo"
         static let rating = "rating"
+        static let summary = "summary"
     }
     
     //MARK: Initialization
     
-    init?(name: String, photo: UIImage?, rating: Int) {
+    init?(name: String, photo: UIImage?, rating: Int, summary: String) {
     
         guard !name.isEmpty else {
             return nil
@@ -42,9 +44,14 @@ class Game: NSObject, NSCoding {
             return nil
         }
         
+        guard !summary.isEmpty else {
+            return nil
+        }
+        
         self.name = name
         self.photo = photo
         self.rating = rating
+        self.summary = summary
     }
     
     //MARK: NSCoding
@@ -53,18 +60,24 @@ class Game: NSObject, NSCoding {
         aCoder.encode(name, forKey: PropertyKey.name)
         aCoder.encode(photo, forKey: PropertyKey.photo)
         aCoder.encode(rating, forKey: PropertyKey.rating)
+        aCoder.encode(summary, forKey: PropertyKey.summary)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
         guard let name = aDecoder.decodeObject(forKey: PropertyKey.name) as? String else {
-            os_log("Unable to decode the name for a Game Object.", log:OSLog.default, type: .debug)
+            os_log("Unable to decode the name for the Game Object.", log:OSLog.default, type: .debug)
+            return nil
+        }
+        
+        guard let summary = aDecoder.decodeObject(forKey: PropertyKey.summary) as? String else {
+            os_log("Unable to decode the summary for the Game Object.", log:OSLog.default, type: .debug)
             return nil
         }
         
         let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
         let rating = aDecoder.decodeInteger(forKey: PropertyKey.rating)
         
-        self.init(name: name, photo: photo, rating: rating)
+        self.init(name: name, photo: photo, rating: rating, summary: summary)
         
     }
 }

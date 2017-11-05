@@ -82,7 +82,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lbd-5V-vMd">
-                                <rect key="frame" x="16" y="84" width="343" height="373"/>
+                                <rect key="frame" x="16" y="84" width="343" height="411"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Game Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6sC-MR-RWb">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
@@ -103,11 +103,20 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PAp-fs-You" customClass="RatingControl" customModule="GameReviewer" customModuleProvider="target">
                                         <rect key="frame" x="45.5" y="329" width="252" height="44"/>
                                     </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Summary Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GbN-AD-iek">
+                                        <rect key="frame" x="0.0" y="381" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="6sC-MR-RWb" secondAttribute="trailing" id="BtT-Tq-Gei"/>
+                                    <constraint firstItem="GbN-AD-iek" firstAttribute="leading" secondItem="Lbd-5V-vMd" secondAttribute="leading" id="H98-4y-mQl"/>
                                     <constraint firstAttribute="trailing" secondItem="AFR-Y8-2Wn" secondAttribute="trailing" constant="30" id="TdG-pG-cfM"/>
+                                    <constraint firstItem="GbN-AD-iek" firstAttribute="top" secondItem="PAp-fs-You" secondAttribute="bottom" constant="8" id="j96-aa-PhC"/>
                                     <constraint firstItem="AFR-Y8-2Wn" firstAttribute="leading" secondItem="Lbd-5V-vMd" secondAttribute="leading" constant="30" id="oNT-9g-YNg"/>
+                                    <constraint firstAttribute="trailing" secondItem="GbN-AD-iek" secondAttribute="trailing" id="weP-JI-DSu"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -135,6 +144,7 @@
                         <outlet property="photoImageView" destination="AFR-Y8-2Wn" id="4ns-r4-CGy"/>
                         <outlet property="ratingControl" destination="PAp-fs-You" id="hyy-gT-DhO"/>
                         <outlet property="saveButton" destination="PXa-5w-d9S" id="BHc-Hk-B00"/>
+                        <outlet property="summaryTextField" destination="GbN-AD-iek" id="wNi-eS-CfY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

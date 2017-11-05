@@ -155,17 +155,22 @@ class GameTableViewController: UITableViewController {
         let photo2 = UIImage(named: "summonersWar")
         let photo3 = UIImage(named: "mobileLegends")
         
-        guard let game1 = Game(name: "Clash of Clans", photo: photo1, rating: 4)
+        let summary1 = "Join millions of players worldwide as you build your village, raise a clan, and compete in epic Clan Wars!"
+        let summary2 = "Assemble the greatest team of monsters for strategic victories!"
+        let summary3 = "Join your friends in a brand new 5v5 MOBA showdown against real human opponents, Mobile Legends: Bang Bang!"
+        
+        
+        guard let game1 = Game(name: "Clash of Clans", photo: photo1, rating: 4, summary: summary1)
             else {
                 fatalError("Unable to instantiate game1")
         }
         
-        guard let game2 = Game(name: "Summoners War", photo: photo2, rating: 5)
+        guard let game2 = Game(name: "Summoners War", photo: photo2, rating: 5, summary: summary2)
             else {
                 fatalError("Unable to instantiate game2")
         }
         
-        guard let game3 = Game(name: "Mobile Legends", photo: photo3, rating: 3)
+        guard let game3 = Game(name: "Mobile Legends", photo: photo3, rating: 3, summary: summary3)
             else {
                 fatalError("Unable to instantiate game3")
         }
