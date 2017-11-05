@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Game Table View Controller-->
         <scene sceneID="V8o-pd-E69">
             <objects>
-                <tableViewController id="Td8-dX-bCz" sceneMemberID="viewController">
+                <tableViewController id="Td8-dX-bCz" customClass="GameTableViewController" customModule="GameReviewer" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="t4T-Bz-9FG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -44,6 +44,11 @@
                                         </stackView>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="xaC-hq-FBf" id="anv-ki-CIG"/>
+                                    <outlet property="photoImageView" destination="Ocg-hZ-X1d" id="SbG-u0-08v"/>
+                                    <outlet property="ratingControl" destination="f0K-gT-LpC" id="pI4-Ip-57x"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

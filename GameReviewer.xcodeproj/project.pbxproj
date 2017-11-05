@@ -16,6 +16,7 @@
 		F5BE50311FAE8F610010D3AF /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BE50301FAE8F610010D3AF /* RatingControl.swift */; };
 		F5C218801FAECEA700C1489F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C2187F1FAECEA700C1489F /* Game.swift */; };
 		F5C218821FAEE30E00C1489F /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C218811FAEE30E00C1489F /* GameTableViewCell.swift */; };
+		F5C218841FAEE8E700C1489F /* GameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C218831FAEE8E700C1489F /* GameTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		F5BE50301FAE8F610010D3AF /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		F5C2187F1FAECEA700C1489F /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		F5C218811FAEE30E00C1489F /* GameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
+		F5C218831FAEE8E700C1489F /* GameTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				F5BE50301FAE8F610010D3AF /* RatingControl.swift */,
 				F5C2187F1FAECEA700C1489F /* Game.swift */,
 				F5C218811FAEE30E00C1489F /* GameTableViewCell.swift */,
+				F5C218831FAEE8E700C1489F /* GameTableViewController.swift */,
 				F5BE50141FAE800E0010D3AF /* Main.storyboard */,
 				F5BE50171FAE800E0010D3AF /* Assets.xcassets */,
 				F5BE50191FAE800E0010D3AF /* LaunchScreen.storyboard */,
@@ -212,6 +215,7 @@
 				F5C218821FAEE30E00C1489F /* GameTableViewCell.swift in Sources */,
 				F5BE50131FAE800E0010D3AF /* ViewController.swift in Sources */,
 				F5BE50311FAE8F610010D3AF /* RatingControl.swift in Sources */,
+				F5C218841FAEE8E700C1489F /* GameTableViewController.swift in Sources */,
 				F5BE50111FAE800E0010D3AF /* AppDelegate.swift in Sources */,
 				F5C218801FAECEA700C1489F /* Game.swift in Sources */,
 			);
