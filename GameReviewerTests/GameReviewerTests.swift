@@ -33,4 +33,25 @@ class GameReviewerTests: XCTestCase {
         }
     }
     
+    //MARK: Game Class Tests
+    
+    func testGameInitializationSucceeds() {
+        let zeroRatingGame = Game.init(name: "Zero", photo: nil, rating:0)
+        XCTAssertNotNil(zeroRatingGame)
+        
+        let positiveRatingGame = Game.init(name: "Positive", photo: nil, rating: 5)
+        XCTAssertNotNil(positiveRatingGame)
+    }
+    
+    func testGameInitializationFails() {
+        let negativeRatingGame = Game.init(name: "Negative", photo: nil, rating: -1)
+        XCTAssertNil(negativeRatingGame)
+        
+        let largeRatingGame = Game.init(name: "Large", photo: nil, rating: 6)
+        XCTAssertNil(largeRatingGame)
+        
+        let emptyStringGame = Game.init(name: "", photo: nil, rating: 0)
+        XCTAssertNil(emptyStringGame)
+    }
+    
 }
