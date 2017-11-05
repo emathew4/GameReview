@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 class GameTableViewController: UITableViewController {
     
@@ -17,6 +18,7 @@ class GameTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.leftBarButtonItem = editButtonItem
         loadSampleMeals()
 
         // Uncomment the following line to preserve selection between presentations
@@ -92,23 +94,48 @@ class GameTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+            
+        case "AddItem":
+            os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+            
+        case "ShowDetail":
+            guard let gameDetailViewController = segue.destination as? GameViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            guard let selectedGameCell = sender as? GameTableViewCell else {
+                fatalError("Unexpected sender \(sender)")
+            }
+            guard let indexPath = tableView.indexPath(for: selectedGameCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            let selectedGame = games[indexPath.row]
+            gameDetailViewController.game = selectedGame
+            
+        default:
+            fatalError("Unexpected Segue Identifier: \(segue.identifier)")
+        }
     }
-    */
     
     //MARK: Actions
     
     @IBAction func unwindToGameList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? GameViewController, let game = sourceViewController.game {
-            let newIndexPath = IndexPath(row: games.count, section: 0)
-            games.append(game)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                games[selectedIndexPath.row] = game
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+            }
+            else {
+                let newIndexPath = IndexPath(row: games.count, section: 0)
+                games.append(game)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
         }
     }
     

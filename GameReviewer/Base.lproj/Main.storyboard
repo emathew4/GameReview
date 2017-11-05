@@ -48,6 +48,7 @@
                                     <outlet property="nameLabel" destination="xaC-hq-FBf" id="anv-ki-CIG"/>
                                     <outlet property="photoImageView" destination="Ocg-hZ-X1d" id="SbG-u0-08v"/>
                                     <outlet property="ratingControl" destination="f0K-gT-LpC" id="pI4-Ip-57x"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="XRB-bG-Aow"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -118,7 +119,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Game" id="87a-2n-wf8">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Nr3-A0-CJc"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Nr3-A0-CJc">
+                            <connections>
+                                <action selector="cancel:" destination="BYZ-38-t0r" id="gyG-Fx-JOS"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="PXa-5w-d9S">
                             <connections>
                                 <segue destination="TSc-MB-Bcp" kind="unwind" unwindAction="unwindToGameListWithSender:" id="Lbr-94-yfo"/>
@@ -176,10 +181,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4VX-jb-amO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="331.19999999999999" y="80.059970014992516"/>
+            <point key="canvasLocation" x="345" y="459"/>
         </scene>
     </scenes>
     <resources>
         <image name="defaultPhoto" width="112" height="112"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="XRB-bG-Aow"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -22,7 +22,17 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         nameTextField.delegate = self
+        
+        if let game = game {
+            navigationItem.title = game.name
+            nameTextField.text = game.name
+            photoImageView.image = game.photo
+            ratingControl.rating = game.rating
+        }
+        
+        updateSaveButtonState()
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,12 +43,18 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
     //MARK: UITextFieldDelegate
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        saveButton.isEnabled = false
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        updateSaveButtonState()
+        navigationItem.title = textField.text
     }
     
     //MARK: UIImagePickerControllerDelegate
@@ -59,6 +75,20 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     //MARK: Navigation
+    
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        let isPresentingInAddGameMode = presentingViewController is UINavigationController
+        
+        if isPresentingInAddGameMode {
+            dismiss(animated: true, completion: nil)
+        }
+        else if let owningNavigationController = navigationController{
+            owningNavigationController.popViewController(animated: true)
+        }
+        else {
+            fatalError("The GameViewController is not inside a navigation controller.")
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
@@ -85,6 +115,13 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         imagePickerController.delegate = self
         
         present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    //MARK: Private Methods
+    
+    private func updateSaveButtonState() {
+        let text = nameTextField.text ?? ""
+        saveButton.isEnabled = !text.isEmpty
     }
 
 }
