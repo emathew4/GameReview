@@ -76,6 +76,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //MARK: UITextViewDelegate
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        saveButton.isEnabled = false
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = UIColor.black
@@ -95,6 +96,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             summaryTextView.text = "Enter summary here"
             summaryTextView.textColor = UIColor.lightGray
         }
+        updateSaveButtonState()
     }
     
     //MARK: UIImagePickerControllerDelegate
@@ -157,13 +159,10 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private func updateSaveButtonState() {
         let nameText = nameTextField.text ?? ""
-        let summaryText = summaryTextView.text ?? ""
-        var summaryNotDone = true
-        if !summaryText.isEmpty && summaryText != "Enter summary here" {
-            summaryNotDone = false
-        }
+        let summaryTextNotEdited = summaryTextView.text == "Enter summary here"
         
-        saveButton.isEnabled = !nameText.isEmpty && !summaryNotDone
+        
+        saveButton.isEnabled = !nameText.isEmpty && !summaryTextNotEdited
     }
 
 }
