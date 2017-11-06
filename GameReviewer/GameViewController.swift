@@ -26,6 +26,9 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(GameViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
         nameTextField.delegate = self
         summaryTextView.delegate = self
         
@@ -49,6 +52,10 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         }
         
         updateSaveButtonState()
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     override func didReceiveMemoryWarning() {
