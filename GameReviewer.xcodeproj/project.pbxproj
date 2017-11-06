@@ -90,9 +90,9 @@
 			isa = PBXGroup;
 			children = (
 				F5BE50101FAE800E0010D3AF /* AppDelegate.swift */,
-				F5BE50121FAE800E0010D3AF /* GameViewController.swift */,
 				F5BE50301FAE8F610010D3AF /* RatingControl.swift */,
 				F5C2187F1FAECEA700C1489F /* Game.swift */,
+				F5BE50121FAE800E0010D3AF /* GameViewController.swift */,
 				F5C218811FAEE30E00C1489F /* GameTableViewCell.swift */,
 				F5C218831FAEE8E700C1489F /* GameTableViewController.swift */,
 				F5C218851FB029CC00C1489F /* GameFavoritesTableViewCell.swift */,

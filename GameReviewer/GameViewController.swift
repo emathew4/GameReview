@@ -19,9 +19,12 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var ratingControl: RatingControl!
     @IBOutlet weak var summaryTextView: UITextView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var favoriteSwitch: UISwitch!
+    
 
     
     var game: Game?
+    var originalFavoriteState: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +41,15 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             photoImageView.image = game.photo
             ratingControl.rating = game.rating
             summaryTextView.text = game.summary
+            
+            let isFavorite = game.favorite
+            if isFavorite {
+                favoriteSwitch.setOn(true, animated: false)
+            } else {
+                favoriteSwitch.setOn(false, animated: false)
+            }
+            originalFavoriteState = game.favorite
+            
         }
         
         //create TextView border
@@ -50,6 +62,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             summaryTextView.text = "Enter summary here"
             summaryTextView.textColor = UIColor.lightGray
         }
+        
         
         updateSaveButtonState()
 
@@ -68,6 +81,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setToolbarHidden(true, animated: true)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -91,6 +105,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationController?.setToolbarHidden(false, animated: true)
         
         NotificationCenter.default.removeObserver(self,
                                                   name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -120,7 +135,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         saveButton.isEnabled = false
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = UIColor.black
+            textView.textColor = UIColor.white
         }
     }
     
@@ -161,6 +176,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         let isPresentingInAddGameMode = presentingViewController is UINavigationController
+        game?.favorite = originalFavoriteState!
+        
         
         if isPresentingInAddGameMode {
             dismiss(animated: true, completion: nil)
@@ -181,8 +198,9 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         let photo = photoImageView.image
         let rating = ratingControl.rating
         let summary = summaryTextView.text ?? ""
+        let favorite = favoriteSwitch.isOn
         
-        game = Game(name: name, photo: photo, rating: rating, summary: summary)
+        game = Game(name: name, photo: photo, rating: rating, summary: summary, favorite: favorite)
     }
     
     //MARK: Actions
@@ -197,12 +215,20 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         present(imagePickerController, animated: true, completion: nil)
     }
     
+    @IBAction func favoriteChanged(_ sender: UISwitch) {
+        if favoriteSwitch.isOn {
+            game?.favorite = true
+        } else {
+            game?.favorite = false
+        }
+    }
+    
+    
     //MARK: Private Methods
     
     private func updateSaveButtonState() {
         let nameText = nameTextField.text ?? ""
         let summaryTextNotEdited = summaryTextView.text == "Enter summary here"
-        
         
         saveButton.isEnabled = !nameText.isEmpty && !summaryTextNotEdited
     }

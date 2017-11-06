@@ -21,8 +21,10 @@ class GameTableViewController: UITableViewController {
     
     var games = [Game]()
     let searchController = UISearchController(searchResultsController: nil)
+
     
     var filteredGames = [Game]()
+    var favoriteGames = [Game]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,8 @@ class GameTableViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Games"
+
+        
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
@@ -42,6 +46,10 @@ class GameTableViewController: UITableViewController {
         }
         else {
             loadSampleGames()
+        }
+    
+        if let savedFavorites = loadFavorites() {
+            favoriteGames += savedFavorites
         }
 
         // Uncomment the following line to preserve selection between presentations
@@ -82,11 +90,17 @@ class GameTableViewController: UITableViewController {
             game = filteredGames[indexPath.row]
         }
         else {
-        game = games[indexPath.row]
+            game = games[indexPath.row]
         }
         cell.nameLabel.text = game.name
         cell.photoImageView.image = game.photo
         cell.ratingControl.rating = game.rating
+        
+        if game.favorite {
+            cell.contentView.backgroundColor = UIColor.orange
+        } else {
+            cell.contentView.backgroundColor = UIColor.white
+        }
 
         return cell
     }
@@ -104,8 +118,19 @@ class GameTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            let game = games[indexPath.row]
+            
+            for ind in 0..<favoriteGames.count {
+                if favoriteGames[ind].name == game.name {
+                    favoriteGames.remove(at: ind)
+                    break
+                }
+            }
+            
             games.remove(at: indexPath.row)
             saveGames()
+            saveFavorites()
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -137,7 +162,7 @@ class GameTableViewController: UITableViewController {
         switch(segue.identifier ?? "") {
             
         case "AddItem":
-            os_log("Adding a new game.", log: OSLog.default, type: .debug)
+                break
             
         case "ShowDetail":
             guard let gameDetailViewController = segue.destination as? GameViewController else {
@@ -163,14 +188,32 @@ class GameTableViewController: UITableViewController {
         if let sourceViewController = sender.source as? GameViewController, let game = sourceViewController.game {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 games[selectedIndexPath.row] = game
+
+                if game.favorite && !isFavoriteAlready(game) {
+                    favoriteGames.append(game)
+                } else if !game.favorite && isFavoriteAlready(game) {
+                    for ind in 0..<favoriteGames.count {
+                        if favoriteGames[ind].name == game.name {
+                            favoriteGames.remove(at: ind)
+                            break
+                        }
+                    }
+                }
+                
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
             }
             else {
                 let newIndexPath = IndexPath(row: games.count, section: 0)
                 games.append(game)
+                
+                if game.favorite {
+                    favoriteGames.append(game)
+                }
+                
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
             saveGames()
+            saveFavorites()
         }
         tableView.reloadData()
     }
@@ -187,17 +230,17 @@ class GameTableViewController: UITableViewController {
         let summary3 = "Join your friends in a brand new 5v5 MOBA showdown against real human opponents, Mobile Legends: Bang Bang!"
         
         
-        guard let game1 = Game(name: "Clash of Clans", photo: photo1, rating: 4, summary: summary1)
+        guard let game1 = Game(name: "Clash of Clans", photo: photo1, rating: 4, summary: summary1, favorite: false)
             else {
                 fatalError("Unable to instantiate game1")
         }
         
-        guard let game2 = Game(name: "Summoners War", photo: photo2, rating: 5, summary: summary2)
+        guard let game2 = Game(name: "Summoners War", photo: photo2, rating: 5, summary: summary2, favorite: false)
             else {
                 fatalError("Unable to instantiate game2")
         }
         
-        guard let game3 = Game(name: "Mobile Legends", photo: photo3, rating: 3, summary: summary3)
+        guard let game3 = Game(name: "Mobile Legends", photo: photo3, rating: 3, summary: summary3, favorite: false)
             else {
                 fatalError("Unable to instantiate game3")
         }
@@ -207,13 +250,8 @@ class GameTableViewController: UITableViewController {
     
     private func saveGames() {
         sortGames()
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(games, toFile: Game.ArchiveURL.path)
-        
-        if isSuccessfulSave {
-            os_log("Games succesfully saved.", log: OSLog.default, type: .debug)
-        } else {
-            os_log("Failed to save games...", log: OSLog.default, type: .error)
-        }
+        let _ = NSKeyedArchiver.archiveRootObject(games, toFile: Game.ArchiveURL.path)
+
     }
 
     private func loadGames() -> [Game]? {
@@ -222,6 +260,28 @@ class GameTableViewController: UITableViewController {
     
     private func sortGames() {
         games = games.sorted{ $0.name < $1.name}
+    }
+    
+    private func saveFavorites() {
+        sortFavorites()
+        let _ = NSKeyedArchiver.archiveRootObject(favoriteGames, toFile: Game.ArchiveURL2.path)
+            }
+    
+    private func sortFavorites() {
+        favoriteGames = favoriteGames.sorted{ $0.name < $1.name}
+    }
+    
+    private func loadFavorites() -> [Game]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Game.ArchiveURL2.path) as? [Game]
+    }
+    
+    private func isFavoriteAlready(_ game: Game) ->Bool {
+        for ind in 0..<favoriteGames.count {
+            if favoriteGames[ind].name == game.name {
+                return true
+            }
+        }
+        return false
     }
     
     func searchBarIsEmpty() -> Bool {
@@ -250,6 +310,8 @@ class GameTableViewController: UITableViewController {
     }
     
     func backAction(_ sender: UIButton) {
+        saveGames()
+        saveFavorites()
         dismiss(animated: true, completion: nil)
     }
     

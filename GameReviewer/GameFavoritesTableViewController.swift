@@ -14,6 +14,7 @@ class GameFavoritesTableViewController: UITableViewController {
     //MARK: Properties
     
     var favorites = [Game]()
+    var games = [Game]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,17 +22,20 @@ class GameFavoritesTableViewController: UITableViewController {
         addBackButton()
         navigationItem.rightBarButtonItem = editButtonItem
 
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        if let savedGames = loadGames() {
+            games += savedGames
+        } else {
+            games = [Game]()
+        }
+        
         if let savedFavorites = loadFavorites() {
             favorites += savedFavorites
-        } else {
-            loadSampleGames()
         }
         
     }
@@ -80,7 +84,19 @@ class GameFavoritesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            let game = favorites[indexPath.row]
+            let name = game.name
+            
+            for ind in 0..<games.count {
+                if games[ind].name == name {
+                    games[ind].favorite = false
+                    break
+                }
+            }
+            
             favorites.remove(at: indexPath.row)
+            
+            saveGames()
             saveFavorites()
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
@@ -115,15 +131,22 @@ class GameFavoritesTableViewController: UITableViewController {
 
     //MARK: Private Methods
     
+    private func saveGames() {
+        sortGames()
+        let _ = NSKeyedArchiver.archiveRootObject(games, toFile: Game.ArchiveURL.path)
+    }
+    
+    private func loadGames() -> [Game]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Game.ArchiveURL.path) as? [Game]
+    }
+    
+    private func sortGames() {
+        games = games.sorted{ $0.name < $1.name}
+    }
+    
     private func saveFavorites() {
         sortFavorites()
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(favorites, toFile: Game.ArchiveURL2.path)
-        
-        if isSuccessfulSave {
-            os_log("Favorites succesfully saved.", log: OSLog.default, type: .debug)
-        } else {
-            os_log("Failed to save favorites...", log: OSLog.default, type: .error)
-        }
+        let _ = NSKeyedArchiver.archiveRootObject(favorites, toFile: Game.ArchiveURL2.path)
     }
     
     private func loadFavorites() -> [Game]? {
@@ -132,34 +155,6 @@ class GameFavoritesTableViewController: UITableViewController {
     
     private func sortFavorites() {
         favorites = favorites.sorted{ $0.name < $1.name}
-    }
-    
-    private func loadSampleGames() {
-        let photo1 = UIImage(named: "clashOfClans")
-        let photo2 = UIImage(named: "summonersWar")
-        let photo3 = UIImage(named: "mobileLegends")
-        
-        let summary1 = "Join millions of players worldwide as you build your village, raise a clan, and compete in epic Clan Wars!"
-        let summary2 = "Assemble the greatest team of monsters for strategic victories!"
-        let summary3 = "Join your friends in a brand new 5v5 MOBA showdown against real human opponents, Mobile Legends: Bang Bang!"
-        
-        
-        guard let game1 = Game(name: "Clash of Clans", photo: photo1, rating: 4, summary: summary1)
-            else {
-                fatalError("Unable to instantiate game1")
-        }
-        
-        guard let game2 = Game(name: "Summoners War", photo: photo2, rating: 5, summary: summary2)
-            else {
-                fatalError("Unable to instantiate game2")
-        }
-        
-        guard let game3 = Game(name: "Mobile Legends", photo: photo3, rating: 3, summary: summary3)
-            else {
-                fatalError("Unable to instantiate game3")
-        }
-        
-        favorites += [game1, game2, game3]
     }
     
     func addBackButton() {
@@ -173,6 +168,9 @@ class GameFavoritesTableViewController: UITableViewController {
     }
     
     func backAction(_ sender: UIButton) {
+        saveGames()
+        saveFavorites()
+
         dismiss(animated: true, completion: nil)
     }
     
