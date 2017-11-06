@@ -17,9 +17,8 @@ class GameFavoritesTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        os_log("Super loaded.", log: OSLog.default, type: .debug)
 
-
+        addBackButton()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,12 +28,10 @@ class GameFavoritesTableViewController: UITableViewController {
         if let savedFavorites = loadFavorites() {
             favorites += savedFavorites
         } else {
-            os_log("Going to load favorites.", log: OSLog.default, type: .debug)
-
-            loadSampleMeals()
-            os_log("Favorites loaded.", log: OSLog.default, type: .debug)
-
+            loadSampleGames()
         }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -135,7 +132,7 @@ class GameFavoritesTableViewController: UITableViewController {
         favorites = favorites.sorted{ $0.name < $1.name}
     }
     
-    private func loadSampleMeals() {
+    private func loadSampleGames() {
         let photo1 = UIImage(named: "clashOfClans")
         let photo2 = UIImage(named: "summonersWar")
         let photo3 = UIImage(named: "mobileLegends")
@@ -161,6 +158,20 @@ class GameFavoritesTableViewController: UITableViewController {
         }
         
         favorites += [game1, game2, game3]
+    }
+    
+    func addBackButton() {
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "BackButton.png"), for: .normal)
+        backButton.setTitle(" Back", for: .normal)
+        backButton.setTitleColor(backButton.tintColor, for: .normal)
+        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+    
+    func backAction(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
 }

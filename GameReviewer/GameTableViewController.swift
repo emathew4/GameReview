@@ -38,7 +38,7 @@ class GameTableViewController: UITableViewController {
             games += savedGames
         }
         else {
-            loadSampleMeals()
+            loadSampleGames()
         }
 
         // Uncomment the following line to preserve selection between presentations
@@ -174,7 +174,7 @@ class GameTableViewController: UITableViewController {
     
     //MARK: Private Methods
     
-    private func loadSampleMeals() {
+    private func loadSampleGames() {
         let photo1 = UIImage(named: "clashOfClans")
         let photo2 = UIImage(named: "summonersWar")
         let photo3 = UIImage(named: "mobileLegends")
