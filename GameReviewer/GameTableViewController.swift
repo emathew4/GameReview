@@ -27,13 +27,16 @@ class GameTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addBackButton()
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Games"
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = editButtonItem
+        
         if let savedGames = loadGames() {
             games += savedGames
         }
@@ -234,6 +237,20 @@ class GameTableViewController: UITableViewController {
     
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    func addBackButton() {
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "BackButton.png"), for: .normal)
+        backButton.setTitle(" Back", for: .normal)
+        backButton.setTitleColor(backButton.tintColor, for: .normal)
+        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+    
+    func backAction(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
 }
