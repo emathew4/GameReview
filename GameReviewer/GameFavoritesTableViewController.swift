@@ -17,6 +17,8 @@ class GameFavoritesTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        os_log("Super loaded.", log: OSLog.default, type: .debug)
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -26,6 +28,12 @@ class GameFavoritesTableViewController: UITableViewController {
         
         if let savedFavorites = loadFavorites() {
             favorites += savedFavorites
+        } else {
+            os_log("Going to load favorites.", log: OSLog.default, type: .debug)
+
+            loadSampleMeals()
+            os_log("Favorites loaded.", log: OSLog.default, type: .debug)
+
         }
     }
 
@@ -48,7 +56,7 @@ class GameFavoritesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "FavoritesTableViewCell"
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? GameTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? GameFavoritesTableViewCell else {
             fatalError("The dequeued cell is not an instance of FavoritesTableViewCell.")
         }
         // Configure the cell...
@@ -125,6 +133,34 @@ class GameFavoritesTableViewController: UITableViewController {
     
     private func sortFavorites() {
         favorites = favorites.sorted{ $0.name < $1.name}
+    }
+    
+    private func loadSampleMeals() {
+        let photo1 = UIImage(named: "clashOfClans")
+        let photo2 = UIImage(named: "summonersWar")
+        let photo3 = UIImage(named: "mobileLegends")
+        
+        let summary1 = "Join millions of players worldwide as you build your village, raise a clan, and compete in epic Clan Wars!"
+        let summary2 = "Assemble the greatest team of monsters for strategic victories!"
+        let summary3 = "Join your friends in a brand new 5v5 MOBA showdown against real human opponents, Mobile Legends: Bang Bang!"
+        
+        
+        guard let game1 = Game(name: "Clash of Clans", photo: photo1, rating: 4, summary: summary1)
+            else {
+                fatalError("Unable to instantiate game1")
+        }
+        
+        guard let game2 = Game(name: "Summoners War", photo: photo2, rating: 5, summary: summary2)
+            else {
+                fatalError("Unable to instantiate game2")
+        }
+        
+        guard let game3 = Game(name: "Mobile Legends", photo: photo3, rating: 3, summary: summary3)
+            else {
+                fatalError("Unable to instantiate game3")
+        }
+        
+        favorites += [game1, game2, game3]
     }
     
 }
