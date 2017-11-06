@@ -19,6 +19,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <toolbar key="tableFooterView" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="AgO-ry-lhZ">
+                            <rect key="frame" x="0.0" y="118" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <items>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="vKn-ke-rkw"/>
+                                <barButtonItem systemItem="add" id="M4h-Ix-0tX">
+                                    <connections>
+                                        <segue destination="hza-wZ-eKB" kind="presentation" identifier="AddItem" id="HnU-cf-Y8y"/>
+                                    </connections>
+                                </barButtonItem>
+                            </items>
+                        </toolbar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GameTableViewCell" rowHeight="90" id="iin-hT-E48" customClass="GameTableViewCell" customModule="GameReviewer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
@@ -57,13 +69,7 @@
                             <outlet property="delegate" destination="Td8-dX-bCz" id="RvD-dX-5II"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Games" id="DHV-1n-SxW">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="M4h-Ix-0tX">
-                            <connections>
-                                <segue destination="hza-wZ-eKB" kind="presentation" identifier="AddItem" id="HnU-cf-Y8y"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Games" id="DHV-1n-SxW"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fD6-Y0-8wz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -221,31 +227,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pna-Ki-E93">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pna-Ki-E93">
+                                <rect key="frame" x="0.0" y="18" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Title" id="hY0-oi-PdA"/>
                                 </items>
                             </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4D-lW-aKK">
-                                <rect key="frame" x="16" y="44" width="343" height="90"/>
+                                <rect key="frame" x="16" y="114" width="343" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Games"/>
                                 <connections>
                                     <segue destination="LEs-aU-3ne" kind="show" id="ydI-J8-A5t"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIk-Jo-jG9">
-                                <rect key="frame" x="16" y="142" width="343" height="90"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="zGT-O1-zAI">
+                                <rect key="frame" x="62" y="397" width="250" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button 2"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIk-Jo-jG9">
+                                <rect key="frame" x="16" y="249" width="343" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Favorites"/>
                                 <connections>
                                     <segue destination="rus-8B-cg2" kind="show" id="Mro-1U-1DI"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Pna-Ki-E93" firstAttribute="top" secondItem="Ryj-Yh-PtB" secondAttribute="top" constant="18" id="7BK-cQ-Kt8"/>
+                            <constraint firstItem="Pna-Ki-E93" firstAttribute="leading" secondItem="Ryj-Yh-PtB" secondAttribute="leading" id="Mc6-Oj-z3i"/>
+                            <constraint firstAttribute="trailing" secondItem="Pna-Ki-E93" secondAttribute="trailing" id="vFa-79-Su1"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGW-jU-r2E" userLabel="First Responder" sceneMemberID="firstResponder"/>
