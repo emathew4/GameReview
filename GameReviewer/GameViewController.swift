@@ -138,6 +138,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             summaryTextView.textColor = UIColor.lightGray
         }
         updateSaveButtonState()
+        summaryTextView.scrollRangeToVisible(NSRange(location:0, length:0))
     }
     
     //MARK: UIImagePickerControllerDelegate

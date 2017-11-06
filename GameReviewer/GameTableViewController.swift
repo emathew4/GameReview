@@ -9,14 +9,29 @@
 import UIKit
 import os.log
 
+extension GameTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
 class GameTableViewController: UITableViewController {
     
     //MARK: Properties
     
     var games = [Game]()
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    var filteredGames = [Game]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Games"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
         
         navigationItem.leftBarButtonItem = editButtonItem
         if let savedGames = loadGames() {
@@ -45,6 +60,9 @@ class GameTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            return filteredGames.count
+        }
         return games.count
     }
 
@@ -56,7 +74,13 @@ class GameTableViewController: UITableViewController {
         }
 
         // Configure the cell...
-        let game = games[indexPath.row]
+        let game: Game
+        if isFiltering() {
+            game = filteredGames[indexPath.row]
+        }
+        else {
+        game = games[indexPath.row]
+        }
         cell.nameLabel.text = game.name
         cell.photoImageView.image = game.photo
         cell.ratingControl.rating = game.rating
@@ -195,6 +219,21 @@ class GameTableViewController: UITableViewController {
     
     private func sortGames() {
         games = games.sorted{ $0.name < $1.name}
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredGames = games.filter({(game : Game) -> Bool in
+            return game.name.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
     }
     
 }

@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Your Games-->
+        <!--Games-->
         <scene sceneID="V8o-pd-E69">
             <objects>
                 <tableViewController id="Td8-dX-bCz" customClass="GameTableViewController" customModule="GameReviewer" customModuleProvider="target" sceneMemberID="viewController">
@@ -57,7 +57,7 @@
                             <outlet property="delegate" destination="Td8-dX-bCz" id="RvD-dX-5II"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Your Games" id="DHV-1n-SxW">
+                    <navigationItem key="navigationItem" title="Games" id="DHV-1n-SxW">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="M4h-Ix-0tX">
                             <connections>
                                 <segue destination="hza-wZ-eKB" kind="presentation" identifier="AddItem" id="HnU-cf-Y8y"/>
