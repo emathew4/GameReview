@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import os.log
 
 class GameViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
 UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -20,8 +19,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var summaryTextView: UITextView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var favoriteSwitch: UISwitch!
-    
-
     
     var game: Game?
     var originalFavoriteState: Bool?
@@ -62,7 +59,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
             summaryTextView.text = "Enter summary here"
             summaryTextView.textColor = UIColor.lightGray
         }
-        
         
         updateSaveButtonState()
 
@@ -191,7 +187,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         super.prepare(for: segue, sender: sender)
         
         guard let button = sender as? UIBarButtonItem, button === saveButton else {
-            os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
         let name = nameTextField.text ?? ""

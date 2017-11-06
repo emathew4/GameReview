@@ -70,12 +70,10 @@ class Game: NSObject, NSCoding {
     
     required convenience init?(coder aDecoder: NSCoder) {
         guard let name = aDecoder.decodeObject(forKey: PropertyKey.name) as? String else {
-            os_log("Unable to decode the name for the Game Object.", log:OSLog.default, type: .debug)
             return nil
         }
         
         guard let summary = aDecoder.decodeObject(forKey: PropertyKey.summary) as? String else {
-            os_log("Unable to decode the summary for the Game Object.", log:OSLog.default, type: .debug)
             return nil
         }
         

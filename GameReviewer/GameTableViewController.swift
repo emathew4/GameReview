@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import os.log
 
 extension GameTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
@@ -234,12 +233,10 @@ class GameTableViewController: UITableViewController {
             else {
                 fatalError("Unable to instantiate game1")
         }
-        
         guard let game2 = Game(name: "Summoners War", photo: photo2, rating: 5, summary: summary2, favorite: false)
             else {
                 fatalError("Unable to instantiate game2")
         }
-        
         guard let game3 = Game(name: "Mobile Legends", photo: photo3, rating: 3, summary: summary3, favorite: false)
             else {
                 fatalError("Unable to instantiate game3")
