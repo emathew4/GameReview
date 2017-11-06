@@ -9,15 +9,17 @@
 import UIKit
 import os.log
 
-class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class GameViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
+UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //MARK: Properties
 
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
-    @IBOutlet weak var summaryTextField: UITextField!
+    @IBOutlet weak var summaryTextView: UITextView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+
     
     var game: Game?
     
@@ -25,13 +27,25 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         super.viewDidLoad()
         
         nameTextField.delegate = self
+        summaryTextView.delegate = self
         
         if let game = game {
             navigationItem.title = game.name
             nameTextField.text = game.name
             photoImageView.image = game.photo
             ratingControl.rating = game.rating
-            summaryTextField.text = game.summary
+            summaryTextView.text = game.summary
+        }
+        
+        //create TextView border
+        summaryTextView.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
+        summaryTextView.layer.borderWidth = 0.5
+        summaryTextView.layer.cornerRadius = 5
+        
+        //create TextView placeholder text
+        if summaryTextView.text.isEmpty {
+            summaryTextView.text = "Enter summary here"
+            summaryTextView.textColor = UIColor.lightGray
         }
         
         updateSaveButtonState()
@@ -57,6 +71,30 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateSaveButtonState()
         navigationItem.title = textField.text
+    }
+    
+    //MARK: UITextViewDelegate
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if summaryTextView.text.isEmpty {
+            summaryTextView.text = "Enter summary here"
+            summaryTextView.textColor = UIColor.lightGray
+        }
     }
     
     //MARK: UIImagePickerControllerDelegate
@@ -98,7 +136,7 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
-        let summary = summaryTextField.text ?? ""
+        let summary = summaryTextView.text ?? ""
         
         game = Game(name: name, photo: photo, rating: rating, summary: summary)
     }
@@ -119,9 +157,13 @@ class GameViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     private func updateSaveButtonState() {
         let nameText = nameTextField.text ?? ""
-        let summaryText = summaryTextField.text ?? ""
+        let summaryText = summaryTextView.text ?? ""
+        var summaryNotDone = true
+        if !summaryText.isEmpty && summaryText != "Enter summary here" {
+            summaryNotDone = false
+        }
         
-        saveButton.isEnabled = !nameText.isEmpty && !summaryText.isEmpty
+        saveButton.isEnabled = !nameText.isEmpty && !summaryNotDone
     }
 
 }
