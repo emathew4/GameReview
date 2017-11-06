@@ -22,6 +22,7 @@ class Game: NSObject, NSCoding {
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("games")
+    static let ArchiveURL2 = DocumentsDirectory.appendingPathComponent("favorites")
     
     //MARK: Types
     
