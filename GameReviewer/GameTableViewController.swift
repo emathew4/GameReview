@@ -40,12 +40,22 @@ class GameTableViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = editButtonItem
         
-        if let savedGames = loadGames() {
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore {
+            if let savedGames = loadGames() {
+                games += savedGames
+            }
+        } else {
+            loadSampleGames()
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+        }
+        
+       /* if let savedGames = loadGames() {
             games += savedGames
         }
         else {
             loadSampleGames()
-        }
+        } */
     
         if let savedFavorites = loadFavorites() {
             favoriteGames += savedFavorites
