@@ -223,10 +223,24 @@ class GameTableViewController: UITableViewController {
         let photo1 = UIImage(named: "clashOfClans")
         let photo2 = UIImage(named: "summonersWar")
         let photo3 = UIImage(named: "mobileLegends")
+        let photo4 = UIImage(named: "assassinsCreedOrigins")
+        let photo5 = UIImage(named: "divinityOriginalSin2")
+        let photo6 = UIImage(named: "undertale")
+        let photo7 = UIImage(named: "wolfenstein2")
+        let photo8 = UIImage(named: "southParkFractured")
+        let photo9 = UIImage(named: "kensho")
+        let photo10 = UIImage(named: "superMarioRun")
         
         let summary1 = "Join millions of players worldwide as you build your village, raise a clan, and compete in epic Clan Wars!"
         let summary2 = "Assemble the greatest team of monsters for strategic victories!"
         let summary3 = "Join your friends in a brand new 5v5 MOBA showdown against real human opponents, Mobile Legends: Bang Bang!"
+        let summary4 = "Assassin's Creed: Origins is the tenth game in the series. The story takes place in Ancient Egypt during Cleopatra's rule."
+        let summary5 = "Divinity: Original Sin II is the sequel to Divinity: Original Sin. It is praised as one of the bst RPGs of all time."
+        let summary6 = "Undertale tells the story of a child who has fallen Underground, into a region filled with monsters and quests. An RPG, all choices made affect the dialogue, characters, and the outcome of the story."
+        let summary7 = "The latest game in the Wolfenstein series takes place in Nazi-occupied USA soon after the events of Wolfenstein: The New Order."
+        let summary8 = "The sequel to South Park: The Stick of Truth, this story follows the New Kid, who has now become involved with the role-playing taking place between two superhero factions."
+        let summary9 = "Match blocks and overcome challenges in this addictive puzzle with rich visual effects that unfolds a narrative through breathtaking places includign lush jungles and stormy seas."
+        let summary10 = "A new kind of Mario game that you can play with one hand"
         
         
         guard let game1 = Game(name: "Clash of Clans", photo: photo1, rating: 4, summary: summary1, favorite: false)
@@ -241,9 +255,40 @@ class GameTableViewController: UITableViewController {
             else {
                 fatalError("Unable to instantiate game3")
         }
+        guard let game4 = Game(name: "Assassin's Creed: Origins", photo: photo4, rating:3, summary: summary4, favorite: false)
+            else {
+                fatalError("Unable to instantiate game4")
+        }
+        guard let game5 = Game(name: "Divinity: Original Sin 2", photo: photo5, rating: 5, summary: summary5, favorite: false)
+            else {
+                fatalError("Unable to instantiate game5")
+        }
+        guard let game6 = Game(name: "Undertale", photo: photo6, rating: 5, summary: summary6, favorite: false)
+            else {
+                fatalError("Unable to instantiate game 6")
+        }
+        guard let game7 = Game(name: "Wolfenstein II", photo: photo7, rating: 3, summary: summary7, favorite: false)
+            else {
+                fatalError("Unable to instantiate game 7")
+        }
+        guard let game8 = Game(name: "South Park: The Fractured but Whole", photo: photo8, rating: 4, summary: summary8, favorite: false)
+            else {
+                fatalError("Unable to instantiate game 8")
+        }
+        guard let game9 = Game(name: "Kensho", photo: photo9, rating: 2, summary: summary9, favorite: false)
+            else {
+                fatalError("Unable to instantiate game 9")
+        }
+        guard let game10 = Game(name: "Super Mario Run", photo: photo10, rating: 3, summary: summary10, favorite: false)
+            else {
+                fatalError("Unable to instantiate game 10")
+        }
         
-        games += [game1, game2, game3]
+        games += [game1, game2, game3, game4, game5, game6, game7, game8, game9, game10]
+        sortGames()
     }
+    
+    
     
     private func saveGames() {
         sortGames()
