@@ -106,7 +106,7 @@ class GameTableViewController: UITableViewController {
         cell.ratingControl.rating = game.rating
         
         if game.favorite {
-            cell.contentView.backgroundColor = UIColor.orange
+            cell.contentView.backgroundColor = UIColor.init(red: 252/255, green: 194/255, blue: 0, alpha: 1)
         } else {
             cell.contentView.backgroundColor = UIColor.white
         }
